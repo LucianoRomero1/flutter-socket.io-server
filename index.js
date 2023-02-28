@@ -10,12 +10,13 @@ const server = require("http").createServer(app);
 module.exports.io = require("socket.io")(server);
 require("./sockets/socket");
 
-const publicPath = path.resolve(__dirname, "public");
+const {PORT} = process.env;
 
+const publicPath = path.resolve(__dirname, "public");
 app.use(express.static(publicPath));
 
-server.listen(process.env.PORT, (error) => {
+server.listen(PORT, (error) => {
   if (error) throw new Error(error);
 
-  console.log("Server running in port ", process.env.PORT);
+  console.log("Server running in port ", PORT);
 });
