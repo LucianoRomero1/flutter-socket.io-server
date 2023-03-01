@@ -32,4 +32,20 @@ io.on("connection", (client) => {
     //io.emit("new-message", payload); emite a TODOS
     client.broadcast.emit("new-message", payload); //Emite a todos menos el que lo emitio
   });
+
+  client.on("vote-band", (payload) =>{
+    bands.voteBand(payload.id);
+    io.emit("active-bands", bands.getBands());
+  });
+
+  client.on('add-band', (payload) => {
+    const newBand = new Band(payload.name); 
+    bands.addBand(newBand);
+    io.emit("active-bands", bands.getBands());
+  })
+
+  client.on('delete-band', (payload) => {
+    bands.deleteBand(payload.id);
+    io.emit("active-bands", bands.getBands());
+  })
 });
